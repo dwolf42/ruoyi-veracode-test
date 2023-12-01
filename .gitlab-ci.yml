@@ -16,6 +16,11 @@ cache:
     - .m2/repository
     - target
 
+Veracode-SCA:
+  stage: analysis
+  script:
+    - curl -sSL https://download.sourceclear.com/ci.sh | sh
+
 Build:
   stage: build
   script:
@@ -31,7 +36,3 @@ Unit Test:
       junit:
         - target/surefire-reports/TEST-*.xml
 
-Veracode-SCA:
-  stage: analysis
-  script:
-    - curl -sSL https://download.sourceclear.com/ci.sh | sh
