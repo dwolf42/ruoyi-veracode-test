@@ -7,9 +7,10 @@ variables:
   APP_NAME: "helloword-cicd by David"
 
 stages:
+  - analysis
   - build
   - test
-  - analysis
+
 
 cache:
   paths:
