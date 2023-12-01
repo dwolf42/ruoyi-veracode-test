@@ -1,0 +1,37 @@
+image: maven:3.9.5-amazoncorretto-17
+#image: docker.ktc.local/runner/maven-runner:3.9.2-JDK17
+
+variables:
+  MAVEN_OPTS: >-
+    -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+  APP_NAME: "helloword-cicd by David"
+
+stages:
+  - build
+  - test
+  - analysis
+
+cache:
+  paths:
+    - .m2/repository
+    - target
+
+Build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS package -DskipTests
+
+Unit Test:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+
+Veracode-SCA:
+  stage: analysis
+  script:
+    - curl -sSL https://download.sourceclear.com/ci.sh | sh
