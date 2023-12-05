@@ -14,6 +14,7 @@ on:
 
 jobs:
   build:
+    needs: Veracode_SCA_Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -58,7 +59,7 @@ jobs:
         run: mvn -B test --file pom.xml
 
   Veracode_SCA_SCAN:
-        needs: build
+#        needs: build
         name: Veracode SCA Scan
         runs-on: ubuntu-latest
         steps:
